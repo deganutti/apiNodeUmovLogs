@@ -1,20 +1,33 @@
+//const { React, useState } = require('react');
 const axios = require("axios");
 
 
 async function callApiTeste() {
 
+
+
     async function callApi(url, apikey, func) {
+        /**
+        const [alternativeIdentifier, setalternativeIdentifier] = useState({ alternativeIdentifier: '' });
+        const [campos, setCampos] = useState({
+            alternativeIdentifier: '',
+        });
+*/
         if (!func) {
             /**
              * 
              * /usuarios/:apikey/
              * 
              */
-
-
             //   let response = await axios({ url: `http://localhost:88/${url}/${apikey}` });
             let response = await axios({ url: `http://localhost:88/${url}/${apikey}` });
-            console.log("Response:", response.data);
+            response => response.json();
+            data => (renderApiResult.textContent = JSON.stringify(data));
+            data => {
+                size.textContent = data.size;
+            }
+
+            console.log("Response:", data);
         } else {
             let response = await axios({ url: `http://localhost:88/${url}/${apikey}/${func}` });
             // let response = await axios({ url: `http://localhost:88/` });
@@ -34,5 +47,4 @@ function callApiUsuarios(n) {
 }
 
 //callApiUsuarios(3);
-
 
