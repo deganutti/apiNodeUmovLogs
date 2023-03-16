@@ -1,6 +1,7 @@
 const express = require('express');
 const umovClienteController = require('../umovClienteController/umovClienteController');
 const callApi = require('../callApiController/callApiController');
+const callApi2 = require('../callApiController/callApi2Controller');
 
 
 const routesUmov = express.Router();
@@ -19,6 +20,8 @@ routesUmov.get("/1", (req, res) => {
 routesUmov.get("/usuarios/:apikey/", umovClienteController.getAgent);
 routesUmov.get("/usuarios/:apikey/:agentId", umovClienteController.getAgentId);
 //routesUmov.get("/teste", umovClienteController.getTeste);
+
+routesUmov.get("/t", callApi2.callApi2);
 
 
 
