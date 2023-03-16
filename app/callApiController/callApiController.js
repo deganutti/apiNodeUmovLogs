@@ -1,45 +1,34 @@
 const axios = require("axios");
-const fetch = require('node-fetch');
 
-async function callApiTeste() {
+async function callApiTeste(req, res) {
 
-    async function getApi() {
-        let url = 'http://127.0.0.1:88/usuarios/36376e975e5cf31d52f1590e9600ffeb5dfa1f';
-
-        let options = { method: 'GET' };
-
-        fetch(url, options)
-            .then(res => res.json())
-            .then(json => console.log(json))
-            .catch(err => console.error('error:' + err));
-    }
 
 
     async function callApi(url, apikey, func) {
         if (!func) {
             /**
-             * 
              * /usuarios/:apikey/
-             * 
              */
+            //let response = await axios({ url: `http://localhost:88/${url}/${apikey}` });
+            await axios({ url: `http://localhost:88/${url}/${apikey}` }).then(function (response) {
 
-            var options = {
-                method: 'GET',
-                url: 'http://127.0.0.1:88/usuarios/36376e975e5cf31d52f1590e9600ffeb5dfa1f'
-            };
 
-            await axios.request(options).then(function (response) {
-                console.log(response.data);
-            }).catch(function (error) {
-                console.error(error);
+                console.log("Resposta:", response.data);
+                console.log("Resposta:", response.data.result.resourceName);
+                console.log("Resposta:", response.data.result.entries);
+                console.log("Resposta:", response.data.result.entries.entry);
+                console.log("Resposta:", response.data.result.entries.entry['_attributes']);
+                console.log("Resposta:", response.data.result.entries.entry.agent);
             });
 
 
 
-
-            //let response = await axios({ url: `http://localhost:88/${url}/${apikey}` });
-            //   let response = await axios({ url: `http://localhost:88/${url}/${apikey}` });
             //console.log("Response:", response.data);
+
+
+
+
+
         } else {
             let response = await axios({ url: `http://localhost:88/${url}/${apikey}/${func}` });
             // let response = await axios({ url: `http://localhost:88/` });
@@ -50,8 +39,8 @@ async function callApiTeste() {
 
 
 
-    // callApi('usuarios', '36376e975e5cf31d52f1590e9600ffeb5dfa1f');
-    getApi();
+    callApi('usuarios', '36376e975e5cf31d52f1590e9600ffeb5dfa1f');
+    //getApi();
 
 }
 function callApiUsuarios(n) {
@@ -59,4 +48,4 @@ function callApiUsuarios(n) {
     // setInterval(getApi, n * 1000);
 }
 
-callApiUsuarios(3);
+callApiUsuarios(5);
