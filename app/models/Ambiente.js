@@ -1,12 +1,12 @@
-const {Sequelize, Model, DataTypes} = require('sequelize');
+const { Sequelize, Model, DataTypes } = require('sequelize');
 
-class Ambiente extends Model{
-    static init(sequelize){
+class Ambiente extends Model {
+    static init(sequelize) {
         super.init({
-            id_ambiente:DataTypes.INTEGER,
-            descricao:DataTypes.STRING,
-            apikey:DataTypes.STRING
-        },{
+            id: DataTypes.INTEGER,
+            descricao: DataTypes.STRING,
+            apikey: DataTypes.STRING
+        }, {
             sequelize
         })
     }
