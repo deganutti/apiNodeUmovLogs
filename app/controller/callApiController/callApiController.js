@@ -4,8 +4,8 @@ const iconvlite = require("iconv-lite");
 const axios = require("axios").default;
 
 
-async function callApiTeste(req,res) {
-    
+async function callApiTeste(req, res) {
+
 
     async function callApi(url, apikey, func) {
         if (!func) {
@@ -27,13 +27,13 @@ async function callApiTeste(req,res) {
 
                 console.log(idAgente);
                 console.log(linkAgente);
-                
+
             }).catch(function (error) {
                 console.error(error);
             });
 
 
- 
+
         } else {
             let response = await axios({ url: `http://localhost:88/${url}/${apikey}/${func}` });
             // let response = await axios({ url: `http://localhost:88/` });
@@ -44,8 +44,8 @@ async function callApiTeste(req,res) {
 
 
 
-     callApi('usuarios', '36376e975e5cf31d52f1590e9600ffeb5dfa1f');
-   
+    callApi('usuarios', '36376e975e5cf31d52f1590e9600ffeb5dfa1f');
+
 
 }
 function callApiUsuarios(n) {
