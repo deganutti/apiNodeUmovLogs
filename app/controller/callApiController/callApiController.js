@@ -17,7 +17,7 @@ async function callApiTeste(req,res) {
 
             var options = {
                 method: 'GET',
-                url: 'http://127.0.0.1:88/usuarios/36376e975e5cf31d52f1590e9600ffeb5dfa1f'
+                url: `http://localhost:88/${url}/${apikey}`
             };
 
             await axios.request(options).then(function (response) {
@@ -27,11 +27,7 @@ async function callApiTeste(req,res) {
 
                 console.log(idAgente);
                 console.log(linkAgente);
-/*
-                console.log(response.data);
-                console.log(response.data.result);
-                console.log(response.data.result.entries.entry);
-*/
+                
             }).catch(function (error) {
                 console.error(error);
             });
@@ -49,12 +45,11 @@ async function callApiTeste(req,res) {
 
 
      callApi('usuarios', '36376e975e5cf31d52f1590e9600ffeb5dfa1f');
-   // getApi();
+   
 
 }
 function callApiUsuarios(n) {
     setInterval(callApiTeste, n * 1000);
-    // setInterval(getApi, n * 1000);
 }
 
-callApiUsuarios(150);
+callApiUsuarios(3000);

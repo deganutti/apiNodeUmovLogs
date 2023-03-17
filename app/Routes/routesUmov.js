@@ -1,7 +1,7 @@
 const express = require('express');
-const umovClienteController = require('../umovClienteController/umovClienteController');
-const callApi = require('../callApiController/callApiController');
-const callApi2 = require('../callApiController/callApi2Controller');
+const umovClienteController = require('../controller/umovClienteController/umovClienteController');
+const callApi = require('../controller/callApiController/callApiController');
+const callApi2 = require('../controller/callApiController/callApi2Controller');
 
 
 const routesUmov = express.Router();
