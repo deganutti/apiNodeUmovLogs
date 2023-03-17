@@ -2,26 +2,26 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('ambiente',{
-      id:{
+    await queryInterface.createTable('ambiente', {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-      }, 
+      },
       descricao: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(150),
         allowNull: false,
       },
       apikey: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(150),
         allowNull: false,
       },
       createdAt: {
@@ -35,7 +35,7 @@ module.exports = {
     });
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
