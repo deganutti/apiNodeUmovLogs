@@ -7,4 +7,5 @@ const connection = new Sequelize(dbConfig);
 
 ambiente.init(connection);
 
+
 module.exports = connection;

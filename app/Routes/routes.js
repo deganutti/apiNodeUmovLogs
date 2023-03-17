@@ -3,7 +3,7 @@ const express = require('express');
 /**
  * Ambientes
  */
-const umovAmbienteController = require('../../app/controller/umovAmbienteController/umovAmbienteController');
+const ambienteController = require('../../app/controller/ambienteController/ambienteController');
 
 
 const routes = express.Router();
@@ -19,10 +19,10 @@ routes.get("/", (req, res) => {
     });
 });
 
-routes.get("/ambiente/", umovAmbienteController.index);
-routes.get("/ambiente2/", umovAmbienteController.index2);
-routes.get("/ambiente/:id", umovAmbienteController.indexOne);
-routes.post("/ambiente/", umovAmbienteController.store);
-routes.put("/ambiente/:id", umovAmbienteController.put);
+routes.get("/ambiente/", ambienteController.index);
+routes.get("/ambiente2/", ambienteController.indexTeste);
+routes.get("/ambiente/:id", ambienteController.indexOne);
+routes.post("/ambiente/", ambienteController.store);
+routes.put("/ambiente/:id", ambienteController.put);
 
 module.exports = routes;
