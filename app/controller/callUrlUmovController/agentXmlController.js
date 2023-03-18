@@ -1,77 +1,89 @@
 const convert = require("xml-js");
 const iconvlite = require("iconv-lite");
-const axios = require("axios").default; 
-const { Op, QueryTypes, sequelize } = require('sequelize');
- 
+const axios = require("axios").default;
+const { Op, QueryTypes, sequelize } = require("sequelize");
 
 module.exports = {
-    async getAgentXml(req, res){
+  async getAgentXml(req, res) {
+    var pages = 10;
 
-        const {apikey} = req.params;
+    const { apikey } = req.params;
 
-        console.log(apikey);
+    var options = {
+      method: "GET",
+      url: `https://api.umov.me/CenterWeb/api/${apikey}/agent.xml?active=true`,
+    };
 
-        var options = {
-            method: 'GET',
-            url:`https://api.umov.me/CenterWeb/api/${apikey}/agent.xml?active=true`,
-        }
-
-        await axios.request(options).then(function (response) {
-            let attributos = convert.xml2js( response.data,{compact:false,spaces:4}); 
-            var id = attributos.elements[0].elements[2].elements[0].attributes.id;
-            var link = attributos.elements[0].elements[2].elements[0].attributes.link;
-            var cadastros = 20;            
-
-            for(i=0;i < attributos.elements.length; i++){
-
-                   
-                    const {apikey} = req.params;
-                    console.log(h);
-                    var options = {
-                        method: 'GET',
-                        url:`https://api.umov.me/CenterWeb/api/${apikey}/agent.xml?paging.page=${i}`,
-                        
-                    }
-                  
-                    await axios.request(options).then( (resp) => {
-                        // console.log(resp.data);
-                        // console.log(h);
-                        
-                        var att = convert.xml2js(resp.data,{compact:false,spaces:4});
-
-                        var id = att.elements[0].elements[2].elements[i].attributes.id;
-                        var link = att.elements[0].elements[2].elements[i].attributes.link;
-                        
-                        console.log(id);
-                      //  console.log(link);
-
-                     //    return res.json(resp.data);
-        
-                    })
-
-                   // return res.json(attributos.elements[0].elements[2]);
-                 //   return res.json(attributos);
-               
-
-            }
-            return res.json(attributos);
+    var ambienteOptions = {
+      method: "GET",
+      url: `http://localhost:88/ambienteApiKey/${apikey}`,
+    };
 
 
 
-
-/*
-            var r0 = attributos;
-            var r1 = attributos.elements[0].elements[0];
-            var r2 = attributos.elements[0].elements[2].elements[0].attributes;
-  
-            var r3 = attributos.elements[0].elements[2].elements[0].attributes.id;
-            var r4 = attributos.elements[0].elements[2].elements[0].attributes.link;
- */
-
-
-        }).catch(function (error) {
-            console.error(error);
+    await axios
+      .request(options)
+      .then(function (response) {
+        let attributos = convert.xml2js(response.data, {
+          compact: false,
+          spaces: 4,
         });
+        var id = attributos.elements[0].elements[2].elements[1].attributes.id;
+        var link =
+          attributos.elements[0].elements[2].elements[1].attributes.link;
 
-    }
-}
+        var registros = attributos.elements[0].elements[2].elements.length;
+
+        console.log("Total de registros: ", registros);
+        console.log("reg", attributos.elements[0].elements[2].elements.length);
+
+        for (i = 0; i < registros; i++) {
+          const id = attributos.elements[0].elements[2].elements[i].attributes.id;
+          const link =
+            attributos.elements[0].elements[2].elements[i].attributes.link;
+
+   //       console.log("id", id);
+    //      console.log("link", link);
+
+
+          axios.request(ambienteOptions).then((resAmbiente) => {
+            const id_ambiente = resAmbiente.data.id;
+            console.log("ID Ambiente:", id_ambiente,"\n","ID: ",id,"\n","Link: ", link);
+            /**
+             * Retorna na variavel, id_ambiente
+             *  SELECT `id`, `descricao`, `apikey`, `createdAt`, `updatedAt` FROM `Ambiente` AS `Ambiente` WHERE `Ambiente`.`apikey` = '36376e975e5cf31d52f1590e9600ffeb5dfa1f' LIMIT 1
+             */
+      
+            /**
+             * /ambienteApiKey/:apikey
+             */
+            
+            var agentBDOptions = {
+                method: "POST",
+                url: `http://localhost:88/agent/${id_ambiente}/${id}/"${link}"`,
+            };
+            console.log("ID Ambiente : ",id_ambiente);
+            console.log("ID Agent : ",id);
+            console.log("Link : ",link);
+            axios.request(agentBDOptions).then((resAgentBd) => {
+                console.log(resAgentBd.data);
+            }).catch((e)=>{
+               
+                console.error(e);
+            });
+
+          });
+
+          return res.json({
+            "status": 200,
+            "Message": "OK!"
+          });
+
+
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  },
+};

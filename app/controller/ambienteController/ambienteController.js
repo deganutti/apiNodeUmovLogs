@@ -55,6 +55,26 @@ module.exports = {
             });
         }
     },
+    async indexApiKey(req, res) {
+
+        try {
+            const { apikey } = req.params;
+            const ambiente = await Ambiente.findOne({
+                where: {  
+
+                        "apikey": apikey 
+                    
+                }
+            });
+            return res.json(ambiente);
+        } catch (e) {
+            return res.status(404).json({
+                code: 404,
+                error: "Ambientes não localizados",
+                message: e.message,
+            });
+        }
+    },
     async store(req, res) {
         try {
             const { descricao, apikey } = req.body;

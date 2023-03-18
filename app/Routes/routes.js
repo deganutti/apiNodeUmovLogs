@@ -22,6 +22,7 @@ routes.get("/", (req, res) => {
 routes.get("/ambiente/", ambienteController.index);
 routes.get("/ambiente2/", ambienteController.indexTeste);
 routes.get("/ambiente/:id", ambienteController.indexOne);
+routes.get("/ambienteApiKey/:apikey", ambienteController.indexApiKey);
 routes.post("/ambiente/", ambienteController.store);
 routes.put("/ambiente/:id", ambienteController.put);
 
