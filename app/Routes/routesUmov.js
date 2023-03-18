@@ -1,8 +1,6 @@
-const express = require('express');
-const umovClienteController = require('../controller/umovClienteController/umovClienteController');
-const callApi = require('../controller/callApiController/callApiController');
-const callApi2 = require('../controller/callApiController/callApi2Controller');
-
+const express = require('express'); 
+const callApi = require('../controller/callApiController/callApiController'); 
+const umovAgentController = require('../controller/umovAgentController/umovAgentController');
 
 const routesUmov = express.Router();
 
@@ -16,16 +14,7 @@ routesUmov.get("/1", (req, res) => {
         },
     });
 });
-
-routesUmov.get("/usuarios/:apikey/", umovClienteController.getAgent);
-routesUmov.get("/usuarios/:apikey/:agentId", umovClienteController.getAgentId);
-//routesUmov.get("/teste", umovClienteController.getTeste);
-
-routesUmov.get("/t", callApi2.callApi2);
-
-
-
-// routesUmov.get("/call", callApi.callApi);
-
+ 
+routesUmov.post("/agent/:id_ambiente/:apikey");
 
 module.exports = routesUmov;

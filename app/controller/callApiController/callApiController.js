@@ -2,7 +2,8 @@ const http = require("https");
 const convert = require("xml-js");
 const iconvlite = require("iconv-lite");
 const axios = require("axios").default;
-
+const Ambiente = require('../../models/Ambiente');
+const { Op, QueryTypes, sequelize } = require('sequelize');
 
 async function callApiTeste(req, res) {
 
@@ -17,16 +18,26 @@ async function callApiTeste(req, res) {
 
             var options = {
                 method: 'GET',
-                url: `http://localhost:88/${url}/${apikey}`
+               // url: `http://localhost:88/${url}/${apikey}`
+                url: `http://localhost:88/ambiente2`
             };
 
             await axios.request(options).then(function (response) {
-                let attributos = response.data.result.entries.entry;
-                let idAgente = attributos[0]._attributes.id;
-                let linkAgente = attributos[0]._attributes.link;
+                let attributos = response.data;
 
-                console.log(idAgente);
-                console.log(linkAgente);
+                for(i = 0; i < attributos.length; i++) {
+                    console.log(attributos[i].id);
+                    console.log(attributos[i].apikey);
+                }
+
+               // let attributos = response.data.result.entries.entry;
+               // let idAgente = attributos[0]._attributes.id;
+               // let linkAgente = attributos[0]._attributes.link;
+
+               // console.log(idAgente);
+               // console.log(linkAgente);
+
+              // console.log(attributos);
 
             }).catch(function (error) {
                 console.error(error);
@@ -52,4 +63,4 @@ function callApiUsuarios(n) {
     setInterval(callApiTeste, n * 1000);
 }
 
-callApiUsuarios(3000);
+//callApiUsuarios(3);

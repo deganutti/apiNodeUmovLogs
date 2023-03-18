@@ -27,8 +27,7 @@ module.exports = {
                 console.log("id: ",ambiente[i]['id'],"Apikey: ",ambiente[i]['apikey']);
                 console.log(ambiente[i]['apikey']);
             }
- 
-            return res.json(ambiente );
+            return res.json(ambiente);
 
         } catch (e) {
             return res.status(404).json({
