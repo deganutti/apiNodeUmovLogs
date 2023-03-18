@@ -20,8 +20,20 @@ module.exports = {
   },
   async store(req, res) {
     try {
-      const { id_ambiente, agent, url } = req.params;
+      /**
+       * captura os dados dos agentes do center, e insere no banco de dados.
+       * id_ambiente identifica a chave estrangeira na tabela ambientes.
+       * agent e o código do agente.
+       * url e a url /agent/numeroagente.xml
+       */
+      var optios = {
+        method: "GET",
+        url: `https://api.umov.me/CenterWeb/api/${apikey}/agent.xml`, 
+      }
+        
 
+
+      const { id_ambiente, agent, url } = req.params;
       const Agente = await Agente.create({
         id_ambietne,
         agent,

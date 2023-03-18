@@ -1,6 +1,14 @@
 const express = require('express'); 
-const callApi = require('../controller/callApiController/callApiController'); 
-const umovAgentController = require('../controller/umovAgentController/umovAgentController');
+
+//controller call ambiente umov.me
+const agentXmlController = require('../controller/callUrlUmovController/agentXmlController');
+
+
+
+
+
+
+const callApi = require('../controller/callApiController/callApiController');  
 
 const routesUmov = express.Router();
 
@@ -14,7 +22,8 @@ routesUmov.get("/1", (req, res) => {
         },
     });
 });
- 
-routesUmov.post("/agent/:id_ambiente/:apikey");
+
+routesUmov.get("/agent/:apikey",agentXmlController.getAgentXml);
+  
 
 module.exports = routesUmov;
