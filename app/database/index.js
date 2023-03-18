@@ -1,11 +1,13 @@
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/database');
-const ambiente = require('../../app/models/Ambiente');
+const Ambiente = require('../../app/models/Ambiente');
+const AgentXml = require('../models/AgentXml');
 
 
 const connection = new Sequelize(dbConfig);
 
-ambiente.init(connection);
+Ambiente.init(connection);
+AgentXml.init(connection);
 
 
 module.exports = connection;

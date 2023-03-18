@@ -2,7 +2,7 @@ const express = require('express');
 
 //controller call ambiente umov.me
 const agentXmlController = require('../controller/callUrlUmovController/agentXmlController');
-
+const umovAgentController = require('../controller/umovAgentController/umovAgentController');
 
 
 
@@ -25,5 +25,10 @@ routesUmov.get("/1", (req, res) => {
 
 routesUmov.get("/agent/:apikey",agentXmlController.getAgentXml);
   
+
+
+routesUmov.post("/agent/:id_ambiente/:agent/:url",umovAgentController.store);
+
+
 
 module.exports = routesUmov;
