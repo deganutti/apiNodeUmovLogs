@@ -8,8 +8,6 @@ const connection = new Sequelize(dbConfig);
 
 
 Ambiente.init(connection);
-
-
 AgentXml.init(connection);
 AgentXml.associate(connection.models);
 
