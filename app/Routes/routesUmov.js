@@ -3,7 +3,7 @@ const express = require('express');
 //controller call ambiente umov.me
 const agentXmlController = require('../controller/callUrlUmovController/agentXmlController');
 const umovAgentController = require('../controller/umovAgentController/umovAgentController');
-
+const umovAgentDetailController = require('../controller/umovAgentDetailController/umovAgentDetailController');
 
 
 
@@ -29,6 +29,10 @@ routesUmov.get("/agent/:apikey",agentXmlController.getAgentXml);
 
 routesUmov.get("/agent",umovAgentController.index);
 routesUmov.post("/agent/:id_ambiente/:id_agente/:link_agente",umovAgentController.store);
+
+routesUmov.get("/agentdetail/",umovAgentDetailController.index);
+routesUmov.post("/agentdetail/:id_ambiente/:id_agente",umovAgentDetailController.store);
+
 
 
 
