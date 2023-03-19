@@ -27,7 +27,8 @@ routesUmov.get("/agent/:apikey",agentXmlController.getAgentXml);
   
 
 
-routesUmov.post("/agent/:id_ambiente/:agent/:url",umovAgentController.store);
+routesUmov.get("/agent",umovAgentController.index);
+routesUmov.post("/agent/:id_ambiente/:id_agente/:link_agente",umovAgentController.store);
 
 
 

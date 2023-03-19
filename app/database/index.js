@@ -7,10 +7,10 @@ const AgentXml = require('../../app/models/AgentXml');
 const connection = new Sequelize(dbConfig);
 
 
-AgentXml.init(connection);
 Ambiente.init(connection);
 
 
+AgentXml.init(connection);
 AgentXml.associate(connection.models);
 
 

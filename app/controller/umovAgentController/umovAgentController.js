@@ -2,6 +2,7 @@ const http = require("https");
 const convert = require("xml-js");
 const iconvlite = require("iconv-lite");
 const axios = require("axios").default;
+const { Op } = require("sequelize");
 
 const AgentXml = require("../../models/AgentXml");
 
@@ -27,17 +28,17 @@ module.exports = {
        * url e a url /agent/numeroagente.xml
        */
     
-      const { id_ambiente, agent, url } = req.params;
-      const Agente = await Agente.create({
-        id_ambietne,
-        agent,
-        url,
+      const { id_ambiente, id_agente, link_agente } = req.params;
+      const AgenteXml = await AgentXml.create({
+        id_ambiente,
+        id_agente,
+        link_agente,
       });
-      return res.json(Agente);
+      return res.json(AgenteXml);
     } catch (e) {
       return res.status(404).json({
         code: 404,
-        error: "Erro ao cadastrar o ambiente.",
+        error: "Erro ao cadastrar o Agente.",
         message: e.message,
       });
     }

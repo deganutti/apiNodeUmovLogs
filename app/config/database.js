@@ -7,10 +7,5 @@ module.exports = {
     define: {
         timestamps: true,
         freezeTableName: true,
-    },
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
-    },
+    }
 }
