@@ -233,7 +233,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      accessRole:{
+        type: Sequelize.STRING(2000),
+        allowNull: true,
+      },
       custom_fields: {
+        type: Sequelize.STRING(2000),
+        allowNull: true,
+      },
+      image:{
         type: Sequelize.STRING(2000),
         allowNull: true,
       },
