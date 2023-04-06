@@ -43,7 +43,7 @@ module.exports = {
   async getAgentDetail2(req, res) {
     var options = {
       method: "GET",
-      url: "https://api.umov.me/CenterWeb/api//36376e975e5cf31d52f1590e9600ffeb5dfa1f/agent/1061410.xml",
+      url: "https://api.umov.me/CenterWeb/api//36376e975e5cf31d52f1590e9600ffeb5dfa1f/agent/1121036.xml",
     };
 
     axios
@@ -77,8 +77,14 @@ module.exports = {
         var agent_blocked = agente['blocked']._text;
         var agent_wrongLoginAttempts = agente['wrongLoginAttempts']._text;
         var agent_lastLevelBatteryMobile = agente['lastLevelBatteryMobile']._text;
+        var agent_insertModule = agente['insertModule']._text;
+        var agent_updatedModule = agente['updatedModule']._text;
+        var agent_isToSearchGeocoder = agente['isToSearchGeocoder']._text;
+        var agent_smartPush = agente['smartPush']._text;
+        var agent_providerExecution = agente['providerExecution']._text;
+        var agent_providerTracking = agente['providerTracking']._text;
+        var agent_processGeocoordinate = agente['processGeocoordinate']._text;
         var agent_lastSyncPlataform = agente['lastSyncPlataform']._text;
-
 
         if(agente['image']){
           var agent_image = agente['image'];
