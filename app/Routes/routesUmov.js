@@ -37,5 +37,8 @@ routesUmov.get("/agentUmov",umovAgentDetailController.getAgentDetail);
 routesUmov.get("/agentUmov2/:apiKey/:agent",umovAgentDetailController.getAgentDetail2);
 
 
+routesUmov.post("/agentUmov/:chaveApi/:agent",umovAgentDetailController.store);
+
+
 
 module.exports = routesUmov;
