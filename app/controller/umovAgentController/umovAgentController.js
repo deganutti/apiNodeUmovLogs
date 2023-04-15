@@ -29,12 +29,34 @@ module.exports = {
        */
     
       const { id_ambiente, id_agente, link_agente } = req.params;
-      const AgenteXml = await AgentXml.create({
-        id_ambiente,
-        id_agente,
-        link_agente,
-      });
-      return res.json(AgenteXml);
+      try {
+        /**
+         * Valida se já existe o registro em tabela para que não tenha duplicidade nos campos.
+         * Caso haja tal duplicitade,  a consulta ao detalhe do agente será mais lenta evitando que os dados sejam obtidos de maneira mais rápida.
+         */
+        const Agent = await AgentXml.findOne({
+          where:{
+            id_ambiente:id_ambiente,
+            id_agente : id_agente
+          }
+        });
+        if(!Agent){
+          var AgenteXmlx = await AgentXml.create({
+            id_ambiente,
+            id_agente,
+            link_agente,
+          });
+        }
+        //return res.json(Agent);
+      } catch(e) {
+        return res.status(404).json({
+          code: 404,
+          error: "Agentes não localizados",
+          message: e.message,
+        });
+      }
+     
+      return res.json(AgenteXmlx);
     } catch (e) {
       return res.status(404).json({
         code: 404,

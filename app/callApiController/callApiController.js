@@ -48,4 +48,4 @@ function callApiUsuarios(n) {
     // setInterval(getApi, n * 1000);
 }
 
-callApiUsuarios(5);
+//callApiUsuarios(5);

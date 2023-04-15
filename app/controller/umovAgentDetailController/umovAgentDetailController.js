@@ -206,10 +206,6 @@ module.exports = {
         } else {
           var agent_email = 'Não Informado';
         }
-
-
-
-
         console.log(agent_lastSyncPlataform);
         return res.json(agent);
       })
@@ -304,6 +300,7 @@ module.exports = {
         provider_precision,
         process_geocoordinate,
       } = req.body;
+ 
       const Agente = await AgentDetail.create({
         id_ambiente,
         id_agente,
