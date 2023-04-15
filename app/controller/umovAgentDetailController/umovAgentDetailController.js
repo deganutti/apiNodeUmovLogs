@@ -41,9 +41,12 @@ module.exports = {
       });
   },
   async getAgentDetail2(req, res) {
+     const {apiKey, agent} = req.params;     
+
+
     var options = {
       method: "GET",
-      url: "https://api.umov.me/CenterWeb/api//36376e975e5cf31d52f1590e9600ffeb5dfa1f/agent/1121036.xml",
+      url: `https://api.umov.me/CenterWeb/api/${apiKey}/agent/${agent}.xml`,
     };
 
     axios
