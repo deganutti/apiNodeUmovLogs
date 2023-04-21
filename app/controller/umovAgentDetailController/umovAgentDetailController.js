@@ -428,7 +428,7 @@ module.exports = {
         //console.log(dados);
 
         var data = new Date();
-        var dia = data.getDate().toString().padStart(2, "0") - 1;
+        var dia = data.getDate().toString().padStart(2, "0") - 3;
         var mes = String(data.getMonth() + 1).padStart(2, "0");
         var ano = data.getFullYear();
 
