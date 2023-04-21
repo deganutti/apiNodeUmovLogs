@@ -4,48 +4,46 @@ async function callApiTeste(req, res) {
 
 
 
-    async function callApi(url, apikey, func) {
-        if (!func) {
-            /**
-             * /usuarios/:apikey/
-             */
-            //let response = await axios({ url: `http://localhost:88/${url}/${apikey}` });
-            await axios({ url: `http://localhost:88/${url}/${apikey}` }).then(function (response) {
+    async function callApiUsuarios() {
 
-
-                console.log("Resposta:", response.data);
-                console.log("Resposta:", response.data.result.resourceName);
-                console.log("Resposta:", response.data.result.entries);
-                console.log("Resposta:", response.data.result.entries.entry);
-                console.log("Resposta:", response.data.result.entries.entry['_attributes']);
-                console.log("Resposta:", response.data.result.entries.entry.agent);
-            });
-
-
-
-            //console.log("Response:", response.data);
+        var options = {
+            method: 'POST',
+            url: 'http://127.0.0.1:88/agentUmov/36376e975e5cf31d52f1590e9600ffeb5dfa1f/1121033',
+            headers: {'Content-Type': 'application/json'}
+          };
+          
+          axios.request(options).then(function (response) {
+            console.log(response.data);
+          }).catch(function (error) {
+            console.error(error);
+          });
 
 
 
 
-
-        } else {
-            let response = await axios({ url: `http://localhost:88/${url}/${apikey}/${func}` });
-            // let response = await axios({ url: `http://localhost:88/` });
-            console.log("Response:", response.data);
-        }
+          var options2 = {
+            method: 'POST',
+            url: 'http://127.0.0.1:88/agentUmov/36376e975e5cf31d52f1590e9600ffeb5dfa1f/1062099',
+            headers: {'Content-Type': 'application/json'}
+          };
+          
+          axios.request(options2).then(function (response) {
+            console.log(response.data);
+          }).catch(function (error) {
+            console.error(error);
+          });
     }
 
 
 
 
-    callApi('usuarios', '36376e975e5cf31d52f1590e9600ffeb5dfa1f');
+    callApiUsuarios();
     //getApi();
 
 }
-function callApiUsuarios(n) {
+function CallApi(n) {
     setInterval(callApiTeste, n * 1000);
     // setInterval(getApi, n * 1000);
 }
 
-//callApiUsuarios(5);
+//CallApi(5);
