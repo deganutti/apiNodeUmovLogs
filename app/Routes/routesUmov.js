@@ -37,7 +37,7 @@ routesUmov.get("/agentUmov",umovAgentDetailController.getAgentDetail);
 routesUmov.get("/agentUmov2/:apiKey/:agent",umovAgentDetailController.getAgentDetail2);
 
 
-routesUmov.post("/agentdetail",umovAgentDetailController.store);
+routesUmov.post("/newAgentDetail",umovAgentDetailController.store);
 
 
 
