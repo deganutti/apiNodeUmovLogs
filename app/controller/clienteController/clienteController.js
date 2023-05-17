@@ -6,10 +6,10 @@ module.exports = {
         try {
             const cliente = await Cliente.findAll();
             return res.json(cliente); 
-        } catch (error) {
+        } catch (e) {
             return res.status(404).json({
                 code: 404,
-                error: "Cliente não localizados",
+                error: "Cliente não localizado",
                 message: e.message,
             }); 
         }

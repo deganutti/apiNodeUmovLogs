@@ -8,7 +8,6 @@ module.exports = {
     async index(req, res) {
 
         try {
-
             const ambiente = await Ambiente.findAll();
             return res.json(ambiente);
         } catch (e) {
@@ -33,7 +32,7 @@ module.exports = {
             return res.status(404).json({
                 code: 404,
                 error: "Erro ao listar o cadastro de ambiente!",
-                'model':'Ambiete',
+                'model':'Ambiente',
                 'controller':'ambienteController',
                 message: e.message
               });
@@ -60,10 +59,8 @@ module.exports = {
         try {
             const { apikey } = req.params;
             const ambiente = await Ambiente.findOne({
-                where: {  
-
-                        "apikey": apikey 
-                    
+                where: {
+                    "apikey": apikey
                 }
             });
             return res.json(ambiente);
@@ -78,12 +75,23 @@ module.exports = {
     async store(req, res) {
         try {
             const { descricao, apikey } = req.body;
-
-            const ambiente = await Ambiente.create({
-                descricao,
-                apikey
+            const ValAmbiente = await Ambiente.findOne({
+                where: {  
+                        "descricao": descricao 
+                }
             });
-            return res.json(ambiente);
+            if(!ValAmbiente){
+                const ambiente = await Ambiente.create({
+                    descricao,
+                    apikey
+                });
+                return res.json(ambiente);
+            } else {
+                return res.status(404).json({
+                    code: 404,
+                    error: "Ambiente já cadastrado!",
+                });
+            }
         } catch (e) {
             return res.status(404).json({
                 code: 404,
@@ -96,7 +104,6 @@ module.exports = {
         try {
             const { id } = req.params;
             const { descricao, apikey } = req.body;
-
             const ambiente = await Ambiente.findOne({
                 where: { id }
             });
@@ -104,7 +111,6 @@ module.exports = {
                 return res.status(404).json({
                     code: 404,
                     error: "Ambiente não localizado!",
-                    message: e.message
                 });
             } else {
                 await ambiente.update({ descricao, apikey });

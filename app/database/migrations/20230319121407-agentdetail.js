@@ -10,7 +10,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    await queryInterface.createTable('agentdetail', {
+    await queryInterface.createTable('Agentdetail', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "ambiente",
+          model: "Ambiente",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "agentxml",
+          model: "Agentxml",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -355,6 +355,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('agentdetail');
+    await queryInterface.dropTable('Agentdetail');
   },
 };
