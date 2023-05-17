@@ -34,10 +34,10 @@ routesUmov.post("/agent/:id_ambiente/:id_agente/:link_agente",umovAgentControlle
 routesUmov.post("/agentdetail/:id_ambiente/:id_agente",umovAgentDetailController.store);
 
 routesUmov.get("/agentUmov",umovAgentDetailController.getAgentDetail);
-routesUmov.get("/agentUmov2/:apiKey/:agent",umovAgentDetailController.getAgentDetail2);
+routesUmov.get("/newAgentDetail/:apiKey/:agent",umovAgentDetailController.getAgentDetail);
 
 
-routesUmov.post("/newAgentDetail",umovAgentDetailController.store);
+routesUmov.post("/newAgentDetail2",umovAgentDetailController.store);
 
 
 

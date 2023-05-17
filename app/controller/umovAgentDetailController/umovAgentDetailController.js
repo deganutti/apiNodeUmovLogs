@@ -20,7 +20,7 @@ module.exports = {
       });
     }
   },
-  async getAgentDetail(req, res) {
+  async getAgentDetail2(req, res) {
     var options = {
       method: "GET",
       url: "https://api.umov.me/CenterWeb/api//36376e975e5cf31d52f1590e9600ffeb5dfa1f/agent/1062099.xml",
@@ -40,7 +40,7 @@ module.exports = {
         console.error(error);
       });
   },
-  async getAgentDetail2(req, res) {
+  async getAgentDetail(req, res) {
     var { apiKey, agent } = req.params;
 
     var ambiente = await Ambiente.findOne({
@@ -119,8 +119,16 @@ module.exports = {
         } else {
           var timezone = "";
         }
-        var providerExecution = agente["providerExecution"]._text;
-        var providerTracking = agente["providerTracking"]._text;
+        if (agente["providerExecution"]) {
+          var providerExecution = agente["providerExecution"]._text;
+        } else {
+          var providerExecution = '';
+        }
+        if (agente["providerTracking"]) {
+          var providerTracking = agente["providerTracking"]._text;
+        } else {
+          var providerTracking = '';
+        }
         var processGeocoordinate = agente["processGeocoordinate"]._text;
         if (agente["precisionProviderExecution"]) {
           var precisionProviderExecution =
@@ -337,7 +345,7 @@ module.exports = {
         } else {
           var email = "Não Informado";
         }
-         const dados = {
+        const dados = {
           id_ambiente: id_ambiente,
           id_agente: id,
           nome: name,
@@ -432,7 +440,7 @@ module.exports = {
         var mes = String(data.getMonth() + 1).padStart(2, "0");
         var ano = data.getFullYear();
 
-        var hoje = `${ano}-${mes}-${dia}`; 
+        var hoje = `${ano}-${mes}-${dia}`;
 
         var dtAtualizacao = new Date(lastUpdateDateTime);
         var diaAtualizacao = dtAtualizacao
@@ -453,113 +461,114 @@ module.exports = {
           console.log(`Ultimo Update => ${lastUpdateDateTime}`);
           console.log(`Hoje => ${hoje}`);
 
-          var options = {
-            method: "POST",
-            url: `http://127.0.0.1:88/agentdetail`,
-            headers: { "Content-Type": "application/json" },
-            data: {
-              id_ambiente: id_ambiente,
-              id_agente: id,
-              nome: name,
-              login: login,
-              active: active,
-              current_situation: currentSituation,
-              alternative_identifier: alternativeIdentifier,
-              lock_login_in_change_imei: lockLoginInChangeImei,
-              validade_cliente: validateClient,
-              center_web_user: centerwebUser,
-              mobile_user: mobileUser,
-              execute_schedules_by_priority: executeSchedulesByPriority,
-              bi_user: biUser,
-              input_web_as_another_user: inputWebAsAnotherUser,
-              observation: observation,
-              country: country,
-              state: state,
-              city: city,
-              neighborhood: neighborhood,
-              street_type: streetType,
-              street: street,
-              street_complement: streetComplement,
-              email: email,
-              change_password: changePassword,
-              memorize_password_mobile: memorizePasswordMobile,
-              last_synchronism_date: lastSynchronismDate,
-              last_synchronism_time: lastSynchronismTime,
-              agent_activities: agentActivities,
-              export_status: exportStatus,
-              view_service_local: viewServiceLocal,
-              imaei_last_sinchronism: imeiLastSynchronism,
-              blocked: blocked,
-              wrong_login_attempts: wrongLoginAttempts,
-              root_user: rootUser,
-              time_zone: timezone,
-              geolocalization: geoLocation,
-              last_geo_position: lastGeoPosition,
-              passwords_settings: passwordSettings,
-              accessRole: accessRole,
-              custom_fields: customFields,
-              image: image,
-              last_level_battery_mobile: lastLevelBatteryMobile,
-              last_sync_platform: lastSyncPlataform,
-              insert_date_time: insertDateTime,
-              last_update_date_time: lastUpdateDateTime,
-              insert_module: insertModule,
-              update_module: updatedModule,
-              is_to_search_geocorder: isToSearchGeocoder,
-              smart_push: smartPush,
-              provider_execution: providerExecution,
-              precision_provider_execution: precisionProviderExecution,
-              provider_tracking: providerTracking,
-              provider_precision: providerPrecision,
-              process_geocoordinate: processGeocoordinate,
-              agent_type_id: agent_agentType_Id,
-              agent_type_description: agent_agentType_Description,
-              agent_type_alternative_identifier:
-                agent_agentType_AlternativeIdentifier,
-              agent_tipe_active: agent_agentType_Active,
-              agent_insert_id: agentInsertId,
-              agent_insert_name: agentInsertName,
-              agent_insert_alternative_identifier:
-                agentInsertAlternativeIdentifier,
-              agent_insert_bi_user: agentInsertBiUser,
-              agent_insert_process_geo_coordinate:
-                agentInsertProcessGeocoordinate,
-              agent_update_id: agentUpdateId,
-              agent_update_name: agentUpdateName,
-              agent_update_alternative_identifier:
-                agentUpdateAlternativeIdentifier,
-              agent_update_bi_user: agentUpdateBiUser,
-              agent_update_process_geo_coordinate:
-                agentUpdateProcessGeocoordinate,
-              weekly_work_day_id: agent_weeklyWorkDay_Id,
-              weekly_work_day_active: agent_weeklyWorkDay_Active,
-              weekly_work_day_alternative_identifier:
-                agent_weeklyWorkDay_Description,
-              weekly_work_day_description:
-                agent_weeklyWorkDay_AlternativeIdentifier,
-              weekly_work_day_task_creation_validation:
-                agent_weeklyWorkDay_TaskCreationValidation,
-              weekly_work_day_validate_agent_disponibility:
-                agent_weeklyWorkDay_ValidateAgentDisponibility,
-              weekly_work_day_only_sync_when_agent_available:
-                agent_weeklyWorkDay_OnlySyncWhenAgentAvailable,
-              weekly_work_day_only_sync_gps_when_agent_vailable:
-                agent_weeklyWorkDay_OnlySyncGPSWhenAgentAvailable,
-              weekly_work_day_block_login_during_Off_hours:
-                agent_weeklyWorkDay_BlockLoginDuringOffHours,
-            },
-          };
-          //console.log(options);
-          axios
-            .request(options)
-            .then(function (response) {
-              // console.log(response.data);
-              return res.json(response.data);
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
+          
         }
+        var options = {
+          method: "POST",
+          url: `http://127.0.0.1:88/agentdetail`,
+          headers: { "Content-Type": "application/json" },
+          data: {
+            id_ambiente: id_ambiente,
+            id_agente: id,
+            nome: name,
+            login: login,
+            active: active,
+            current_situation: currentSituation,
+            alternative_identifier: alternativeIdentifier,
+            lock_login_in_change_imei: lockLoginInChangeImei,
+            validade_cliente: validateClient,
+            center_web_user: centerwebUser,
+            mobile_user: mobileUser,
+            execute_schedules_by_priority: executeSchedulesByPriority,
+            bi_user: biUser,
+            input_web_as_another_user: inputWebAsAnotherUser,
+            observation: observation,
+            country: country,
+            state: state,
+            city: city,
+            neighborhood: neighborhood,
+            street_type: streetType,
+            street: street,
+            street_complement: streetComplement,
+            email: email,
+            change_password: changePassword,
+            memorize_password_mobile: memorizePasswordMobile,
+            last_synchronism_date: lastSynchronismDate,
+            last_synchronism_time: lastSynchronismTime,
+            agent_activities: agentActivities,
+            export_status: exportStatus,
+            view_service_local: viewServiceLocal,
+            imaei_last_sinchronism: imeiLastSynchronism,
+            blocked: blocked,
+            wrong_login_attempts: wrongLoginAttempts,
+            root_user: rootUser,
+            time_zone: timezone,
+            geolocalization: geoLocation,
+            last_geo_position: lastGeoPosition,
+            passwords_settings: passwordSettings,
+            accessRole: accessRole,
+            custom_fields: customFields,
+            image: image,
+            last_level_battery_mobile: lastLevelBatteryMobile,
+            last_sync_platform: lastSyncPlataform,
+            insert_date_time: insertDateTime,
+            last_update_date_time: lastUpdateDateTime,
+            insert_module: insertModule,
+            update_module: updatedModule,
+            is_to_search_geocorder: isToSearchGeocoder,
+            smart_push: smartPush,
+            provider_execution: providerExecution,
+            precision_provider_execution: precisionProviderExecution,
+            provider_tracking: providerTracking,
+            provider_precision: providerPrecision,
+            process_geocoordinate: processGeocoordinate,
+            agent_type_id: agent_agentType_Id,
+            agent_type_description: agent_agentType_Description,
+            agent_type_alternative_identifier:
+              agent_agentType_AlternativeIdentifier,
+            agent_tipe_active: agent_agentType_Active,
+            agent_insert_id: agentInsertId,
+            agent_insert_name: agentInsertName,
+            agent_insert_alternative_identifier:
+              agentInsertAlternativeIdentifier,
+            agent_insert_bi_user: agentInsertBiUser,
+            agent_insert_process_geo_coordinate:
+              agentInsertProcessGeocoordinate,
+            agent_update_id: agentUpdateId,
+            agent_update_name: agentUpdateName,
+            agent_update_alternative_identifier:
+              agentUpdateAlternativeIdentifier,
+            agent_update_bi_user: agentUpdateBiUser,
+            agent_update_process_geo_coordinate:
+              agentUpdateProcessGeocoordinate,
+            weekly_work_day_id: agent_weeklyWorkDay_Id,
+            weekly_work_day_active: agent_weeklyWorkDay_Active,
+            weekly_work_day_alternative_identifier:
+              agent_weeklyWorkDay_Description,
+            weekly_work_day_description:
+              agent_weeklyWorkDay_AlternativeIdentifier,
+            weekly_work_day_task_creation_validation:
+              agent_weeklyWorkDay_TaskCreationValidation,
+            weekly_work_day_validate_agent_disponibility:
+              agent_weeklyWorkDay_ValidateAgentDisponibility,
+            weekly_work_day_only_sync_when_agent_available:
+              agent_weeklyWorkDay_OnlySyncWhenAgentAvailable,
+            weekly_work_day_only_sync_gps_when_agent_vailable:
+              agent_weeklyWorkDay_OnlySyncGPSWhenAgentAvailable,
+            weekly_work_day_block_login_during_Off_hours:
+              agent_weeklyWorkDay_BlockLoginDuringOffHours,
+          },
+        };
+        //console.log(options);
+        axios
+          .request(options)
+          .then(function (response) {
+            // console.log(response.data);
+            return res.json(response.data);
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
       })
 
       .catch(function (error) {
