@@ -40,6 +40,63 @@ module.exports = {
         console.error(error);
       });
   },
+  async showAll(req, res) {
+    try {
+      const detailAgent = await AgentDetail.findAll({
+        include: [
+          {
+            model: Ambiente,
+            as: "ambiente",
+            attributes: ["id", "descricao"],
+            required: true,
+          },
+          {
+            model: AgentXml,
+            as: "angentxml",
+            attributes: ["id_agente"],
+            required: true,
+          },]
+      });
+      return res.json(detailAgent);
+    } catch (e) {
+      return res.status(404).json({
+        code: 404,
+        error: "Erro ao cadastrar o Agente.",
+        message: e.message,
+      });
+    }
+  },
+  async showAgent(req, res) {
+    try {
+      var { login } = req.params;
+      const detailAgent = await AgentDetail.findAll({
+        where: {
+          login: login,
+        },
+        include: [
+          {
+            model: Ambiente,
+            as: "ambiente",
+            attributes: ["id", "descricao"],
+            required: true,
+          },
+          {
+            model: AgentXml,
+            as: "angentxml",
+            attributes: ["id_agente"],
+            required: true,
+          },
+        ], 
+      });
+      return res.json(detailAgent);
+    } catch (e) {
+      return res.status(404).json({
+        code: 404,
+        error: "Erro ao listar o Agente.",
+        message: e.message,
+      });
+    }
+  },
   async getAgentDetail(req, res) {
     var { apiKey, agent } = req.params;
 
@@ -292,17 +349,15 @@ module.exports = {
           var agent_weeklyWorkDay_TaskCreationValidation = "0";
           var agent_weeklyWorkDay_ValidateAgentDisponibility = "0";
           var agent_weeklyWorkDay_OnlySyncWhenAgentAvailable = "0";
-          var agent_weeklyWorkDay_OnlySyncGPSWhenAgentAvailable =
-            "0";
+          var agent_weeklyWorkDay_OnlySyncGPSWhenAgentAvailable = "0";
           var agent_weeklyWorkDay_BlockLoginDuringOffHours = "0";
         }
 
-        if(agente['provider_execution']){
-          var provider_execution=agente['provider_execution']._text;
+        if (agente["provider_execution"]) {
+          var provider_execution = agente["provider_execution"]._text;
         } else {
           var provider_execution = 0;
         }
-
 
         if (agente["observation"]._text) {
           var observation = agente["observation"]._text;
@@ -467,8 +522,6 @@ module.exports = {
           console.log("Passou data menor");
           console.log(`Ultimo Update => ${lastUpdateDateTime}`);
           console.log(`Hoje => ${hoje}`);
-
-          
         }
         var options = {
           method: "POST",
