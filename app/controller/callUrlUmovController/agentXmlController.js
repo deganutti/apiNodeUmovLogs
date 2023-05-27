@@ -86,6 +86,20 @@ module.exports = {
                     .catch((e) => {
                       console.error(e);
                     });
+/**
+ * inserir os dados de todos os usuarios cadastrados no ambiente.
+ */
+                    var options = {
+                      method: 'GET',
+                      url: `http://127.0.0.1:88/newAgentDetail/${apikey}/${id}`,
+                      headers: {'Content-Type': 'application/json'}
+                    };
+                    
+                    axios.request(options).then(function (response) {
+                      console.log(response.data);
+                    }).catch(function (error) {
+                      console.error(error);
+                    });
                 } else {
                   page = pages;
                   return res.json({
