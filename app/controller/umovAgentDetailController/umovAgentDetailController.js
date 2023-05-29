@@ -265,7 +265,12 @@ module.exports = {
           var agentUpdateBiUser = "0";
           var agentUpdateProcessGeocoordinate = "0";
         }
-
+        if(agente['execute_schedules_by_priority']){
+          var execute_schedules_by_priority = agente['execute_schedules_by_priority'];
+        } else {
+          var execute_schedules_by_priority = "0";
+        }
+        
         if (agente["weeklyWorkday"]) {
           var agent_weeklyWorkDay_Id = agente["weeklyWorkday"]["id"]._text;
           var agent_weeklyWorkDay_Active =
