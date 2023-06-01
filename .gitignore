@@ -45,6 +45,9 @@ jspm_packages/
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
+#configuração do banco de dados.
+app/config/
+
 # TypeScript cache
 *.tsbuildinfo
 
@@ -125,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+app/config/database.js
+app/config/database.js
+app/config/database.js

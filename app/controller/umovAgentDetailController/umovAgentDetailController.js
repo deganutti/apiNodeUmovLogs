@@ -40,6 +40,63 @@ module.exports = {
         console.error(error);
       });
   },
+  async showAll(req, res) {
+    try {
+      const detailAgent = await AgentDetail.findAll({
+        include: [
+          {
+            model: Ambiente,
+            as: "ambiente",
+            attributes: ["id", "descricao"],
+            required: true,
+          },
+          {
+            model: AgentXml,
+            as: "angentxml",
+            attributes: ["id_agente"],
+            required: true,
+          },]
+      });
+      return res.json(detailAgent);
+    } catch (e) {
+      return res.status(404).json({
+        code: 404,
+        error: "Erro ao cadastrar o Agente.",
+        message: e.message,
+      });
+    }
+  },
+  async showAgent(req, res) {
+    try {
+      var { login } = req.params;
+      const detailAgent = await AgentDetail.findAll({
+        where: {
+          login: login,
+        },
+        include: [
+          {
+            model: Ambiente,
+            as: "ambiente",
+            attributes: ["id", "descricao"],
+            required: true,
+          },
+          {
+            model: AgentXml,
+            as: "angentxml",
+            attributes: ["id_agente"],
+            required: true,
+          },
+        ], 
+      });
+      return res.json(detailAgent);
+    } catch (e) {
+      return res.status(404).json({
+        code: 404,
+        error: "Erro ao listar o Agente.",
+        message: e.message,
+      });
+    }
+  },
   async getAgentDetail(req, res) {
     var { apiKey, agent } = req.params;
 
@@ -122,12 +179,12 @@ module.exports = {
         if (agente["providerExecution"]) {
           var providerExecution = agente["providerExecution"]._text;
         } else {
-          var providerExecution = '';
+          var providerExecution = 0;
         }
         if (agente["providerTracking"]) {
           var providerTracking = agente["providerTracking"]._text;
         } else {
-          var providerTracking = '';
+          var providerTracking = 0;
         }
         var processGeocoordinate = agente["processGeocoordinate"]._text;
         if (agente["precisionProviderExecution"]) {
@@ -145,7 +202,7 @@ module.exports = {
         if (agente["lastSyncPlataform"]) {
           var lastSyncPlataform = agente["lastSyncPlataform"]._text;
         } else {
-          var lastSyncPlataform = "Não Informado";
+          var lastSyncPlataform = "0";
         }
 
         if (agente["image"]) {
@@ -205,7 +262,7 @@ module.exports = {
         if (agente["alternativeIdentifier"]._text) {
           var alternativeIdentifier = agente["alternativeIdentifier"]._text;
         } else {
-          var alternativeIdentifier = "Não Informado";
+          var alternativeIdentifier = "0";
         }
 
         if (agente["insertDateTime"]) {
@@ -229,9 +286,9 @@ module.exports = {
           var agent_agentType_Active = agente["agentType"]["active"]._text;
         } else {
           var agent_agentType_Id = "0";
-          var agent_agentType_Description = "Não Informado";
-          var agent_agentType_AlternativeIdentifier = "Não Informado";
-          var agent_agentType_Active = "Não Informado";
+          var agent_agentType_Description = "0";
+          var agent_agentType_AlternativeIdentifier = "0";
+          var agent_agentType_Active = "0";
         }
 
         if (agent["agentInsert"]) {
@@ -244,8 +301,8 @@ module.exports = {
             agent["agentInsert"]["processGeocoordinate"]._text;
         } else {
           var agentInsertId = "0";
-          var agentInsertName = "Não Informado";
-          var agentInsertAlternativeIdentifier = "Não Informado";
+          var agentInsertName = "0";
+          var agentInsertAlternativeIdentifier = "0";
           var agentInsertBiUser = "0";
           var agentInsertProcessGeocoordinate = "0";
         }
@@ -260,8 +317,8 @@ module.exports = {
             agent["agentLastUpdate"]["processGeocoordinate"]._text;
         } else {
           var agentUpdateId = "0";
-          var agentUpdateName = "Não Informado";
-          var agentUpdateAlternativeIdentifier = "Não Informado";
+          var agentUpdateName = "0";
+          var agentUpdateAlternativeIdentifier = "0";
           var agentUpdateBiUser = "0";
           var agentUpdateProcessGeocoordinate = "0";
         }
@@ -291,64 +348,69 @@ module.exports = {
             agente["weeklyWorkday"]["blockLoginDuringOffHours"]._text;
         } else {
           var agent_weeklyWorkDay_Id = "0";
-          var agent_weeklyWorkDay_Active = "Não Informado";
-          var agent_weeklyWorkDay_Description = "Não Informado";
-          var agent_weeklyWorkDay_AlternativeIdentifier = "Não Informado";
-          var agent_weeklyWorkDay_TaskCreationValidation = "Não Informado";
-          var agent_weeklyWorkDay_ValidateAgentDisponibility = "Não Informado";
-          var agent_weeklyWorkDay_OnlySyncWhenAgentAvailable = "Não Informado";
-          var agent_weeklyWorkDay_OnlySyncGPSWhenAgentAvailable =
-            "Não Informado";
-          var agent_weeklyWorkDay_BlockLoginDuringOffHours = "Não Informado";
+          var agent_weeklyWorkDay_Active = "0";
+          var agent_weeklyWorkDay_Description = "0";
+          var agent_weeklyWorkDay_AlternativeIdentifier = "0";
+          var agent_weeklyWorkDay_TaskCreationValidation = "0";
+          var agent_weeklyWorkDay_ValidateAgentDisponibility = "0";
+          var agent_weeklyWorkDay_OnlySyncWhenAgentAvailable = "0";
+          var agent_weeklyWorkDay_OnlySyncGPSWhenAgentAvailable = "0";
+          var agent_weeklyWorkDay_BlockLoginDuringOffHours = "0";
+        }
+
+        if (agente["provider_execution"]) {
+          var provider_execution = agente["provider_execution"]._text;
+        } else {
+          var provider_execution = 0;
         }
 
         if (agente["observation"]._text) {
           var observation = agente["observation"]._text;
         } else {
-          var observation = "Não Informado";
+          var observation = "0";
         }
 
         if (agente["country"]._text) {
           var country = agente["country"]._text;
         } else {
-          var country = "Não Informado";
+          var country = "0";
         }
 
         if (agente["state"]._text) {
           var state = agente["state"]._text;
         } else {
-          var state = "Não Informado";
+          var state = "0";
         }
 
         if (agente["city"]._text) {
           var city = agente["city"]._text;
         } else {
-          var city = "Não Informado";
+          var city = "0";
         }
         if (agente["neighborhood"]._text) {
           var neighborhood = agente["neighborhood"]._text;
         } else {
-          var neighborhood = "Não Informado";
+          var neighborhood = "0";
         }
         if (agente["streetType"]._text) {
           var streetType = agente["streetType"]._text;
         } else {
-          var streetType = "Não Informado";
+          var streetType = "0";
         }
         if (agente["street"]._text) {
           var street = agente["street"]._text;
         } else {
-          var street = "Não Informado";
+          var street = "0";
         }
         if (agente["streetComplement"]._text) {
           var streetComplement = agente["streetComplement"]._text;
         } else {
-          var streetComplement = "Não Informado";
+          var streetComplement = "0";
         }
         if (agente["email"]._text) {
           var email = agente["email"]._text;
         } else {
-          var email = "Não Informado";
+          var email = "0";
         }
         const dados = {
           id_ambiente: id_ambiente,
@@ -465,8 +527,6 @@ module.exports = {
           console.log("Passou data menor");
           console.log(`Ultimo Update => ${lastUpdateDateTime}`);
           console.log(`Hoje => ${hoje}`);
-
-          
         }
         var options = {
           method: "POST",
