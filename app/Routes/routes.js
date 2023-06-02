@@ -40,6 +40,8 @@ routes.put("/nova_empresa",dadosEmpresaController.store);
  * Licenças
  */
 routes.get("/licenca",licencaEmpresaController.index);
+routes.get("/licenca_total",licencaEmpresaController.empresaLicenca);
+routes.put("/add_licenca",licencaEmpresaController.novasQuantidades);
 
 
 routes.get("/ambiente/", ambienteController.index);
